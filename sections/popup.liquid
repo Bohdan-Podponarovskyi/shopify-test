@@ -1,0 +1,92 @@
+{%- if section.settings.popup -%}
+    {{ 'popup.css' | asset_url | stylesheet_tag }}
+
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <div class="popup__image-wrapper">
+                <img src="{{ section.settings.image | img_url: 'master' }}" alt="Popup image">
+            </div>
+            <div class="popup__details-wrapper">
+                <div class="popup__title">
+                    <p>{{ section.settings.subtitle }}</p>
+                    <h3>{{ section.settings.title }}</h3>
+                </div>
+                <ul class="popup__products">
+                    {%- for block in section.blocks -%}
+                        {% assign product = all_products[block.settings.product] %}
+                        <li class="popup__product-item">
+                            <div class="popup__product-image">
+                                <img src="{{ product.featured_media | img_url: '600' }}" alt="">
+                            </div>
+                            <div class="popup__product-details">
+                                <p>{{ product.vendor }}</p>
+                                <a href="{{ product.url }}">
+                                    <h4>{{ product.title | escape }}</h4>
+                                </a>
+                                <p>{{ product.price | money }}</p>
+                                <p>{{ product.compare_at_price | money }}</p>
+                                <p>SKU: {{ product.selected_or_first_available_variant.sku }}</p>
+                            </div>
+                        </li>
+                    {%- endfor -%}
+                </ul>
+                <button class="popup__button">Add to cart</button>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Popup",
+  "tag": "section",
+  "class": "popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "popup",
+      "label": "Enable popup"
+    },
+    {
+      "type": "header",
+      "content": "Popup settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Sale"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popup"
+    }
+  ]
+}
+{% endschema %}
