@@ -1,46 +1,51 @@
 {%- if section.settings.popup -%}
     {{ 'popup.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
 
-    <div class="popup__wrapper">
-        <div class="popup__content">
-            <div class="popup__image-wrapper">
-                <img src="{{ section.settings.image | img_url: 'master' }}" alt="Popup image">
-            </div>
-            <div class="popup__details-wrapper">
-                <div class="popup__title">
-                    <p>{{ section.settings.subtitle }}</p>
-                    <h3>{{ section.settings.title }}</h3>
+    <section id="js-popup" class="popup" data-popup-delay={{ section.settings.popup_delay | json }} data-show-once={{ section.settings.show_once | json }}>
+        <div class="popup__container">
+            <div class="popup__content">
+                <button type="button" class="popup__close js-popup-close">
+                    {% render 'icon-close' %}
+                </button>
+                <div class="popup__image-wrapper">
+                    <img src="{{ section.settings.image | img_url: 'master' }}" alt="Popup image">
                 </div>
-                <ul class="popup__products">
-                    {%- for block in section.blocks -%}
-                        {% assign product = all_products[block.settings.product] %}
-                        <li class="popup__product-item">
-                            <div class="popup__product-image">
-                                <img src="{{ product.featured_media | img_url: '600' }}" alt="">
-                            </div>
-                            <div class="popup__product-details">
-                                <p>{{ product.vendor }}</p>
-                                <a href="{{ product.url }}">
-                                    <h4>{{ product.title | escape }}</h4>
-                                </a>
-                                <p>{{ product.price | money }}</p>
-                                <p>{{ product.compare_at_price | money }}</p>
-                                <p>SKU: {{ product.selected_or_first_available_variant.sku }}</p>
-                            </div>
-                        </li>
-                    {%- endfor -%}
-                </ul>
-                <button class="popup__button">Add to cart</button>
+                <div class="popup__details-wrapper">
+                    <div class="popup__title">
+                        <p>{{ section.settings.subtitle }}</p>
+                        <h3>{{ section.settings.title }}</h3>
+                    </div>
+                    <ul class="popup__products">
+                        {%- for block in section.blocks -%}
+                            {% assign product = all_products[block.settings.product] %}
+                            <li class="popup__product-item">
+                                <div class="popup__product-image">
+                                    <img src="{{ product.featured_media | img_url: '600' }}" alt="">
+                                </div>
+                                <div class="popup__product-details">
+                                    <p>{{ product.vendor }}</p>
+                                    <a href="{{ product.url }}">
+                                        <h4>{{ product.title | escape }}</h4>
+                                    </a>
+                                    <p>{{ product.price | money }}</p>
+                                    <p>{{ product.compare_at_price | money }}</p>
+                                    <p>SKU: {{ product.selected_or_first_available_variant.sku }}</p>
+                                </div>
+                            </li>
+                        {%- endfor -%}
+                    </ul>
+                    <button class="popup__button">Add to cart</button>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
 {%- endif -%}
 
 {% schema %}
 {
   "name": "Popup",
-  "tag": "section",
-  "class": "popup",
   "settings": [
     {
       "type": "checkbox",
@@ -67,6 +72,21 @@
       "id": "title",
       "label": "Title",
       "default": "Featured products"
+    },
+    {
+      "type": "range",
+      "id": "popup_delay",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "sec",
+      "label": "Popup delay in seconds",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_once",
+      "label": "Show once per customer"
     }
   ],
   "blocks": [
@@ -81,11 +101,6 @@
           "label": "Product"
         }
       ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Popup"
     }
   ]
 }

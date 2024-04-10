@@ -10,6 +10,7 @@
   //pointer-events: none;
   overflow: hidden;
   z-index: 5;
+  display: none;
 
   p, ul, h3, h4 {
     margin: 0;
@@ -20,7 +21,7 @@
     list-style: none;
   }
 
-  &__wrapper {
+  &__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,6 +43,22 @@
     gap: 80px;
     //max-width: 80vw;
     //width: auto;
+    position: relative;
+  }
+
+  &__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    color: #000000;
+    padding: 16px;
+    border: none;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &__image-wrapper {
@@ -101,5 +118,13 @@
         background: #000000;
       }
     }
+  }
+}
+
+body {
+  .lock & {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
   }
 }

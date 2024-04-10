@@ -154,7 +154,9 @@
           "popup": true,
           "image": "shopify:\/\/shop_images\/23f6e32a-9ae3-4ad4-a2b2-54e391bd3b28.jpg",
           "subtitle": "Sale",
-          "title": "Featured products"
+          "title": "Featured products",
+          "popup_delay": 0,
+          "show_once": false
         }
       }
     },
