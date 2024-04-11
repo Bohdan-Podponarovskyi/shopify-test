@@ -57,6 +57,8 @@ class Popup {
             console.log(response);
 
             await this.updateCartCounter();
+            await this.closePopup();
+
         } catch (error) {
             console.error('Error:', error);
         }

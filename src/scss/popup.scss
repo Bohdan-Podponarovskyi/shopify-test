@@ -4,13 +4,20 @@
   left: 0;
   bottom: 0;
   right: 0;
-  //padding: 56px;
+  padding: 56px;
   transition: visibility 0.8s ease 0s;
-  //visibility: hidden;
-  //pointer-events: none;
   overflow: hidden;
   z-index: 5;
   display: none;
+
+  &::after {
+    content: '';
+    inset: 0;
+    position: absolute;
+    background: #000000;
+    opacity: 0.3;
+    z-index: -1;
+  }
 
   p, ul, h3, h4 {
     margin: 0;
@@ -36,13 +43,10 @@
     background: #fff;
     padding: 56px;
     border-radius: 4px;
-    border: 1px solid red;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 80px;
-    //max-width: 80vw;
-    //width: auto;
     position: relative;
   }
 
@@ -67,6 +71,7 @@
     img {
       width: 100%;
       height: auto;
+      border-radius: 4px;
     }
   }
 
@@ -75,13 +80,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 48px;
+    gap: 32px;
   }
 
   &__title {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 
     p {
       color: #ef813c;
@@ -99,6 +103,13 @@
     gap: 24px;
   }
 
+  &__product-details {
+
+    a {
+      text-decoration: none;
+    }
+  }
+
   &__product-item {
     display: flex;
     align-items: center;
@@ -106,11 +117,50 @@
     gap: 24px;
   }
 
+  &__product-image {
+    max-width: 150px;
+
+    img {
+      width: 100%;
+      border-radius: 4px;
+    }
+  }
+
+  &__product-title {
+    font-size: 24px;
+    font-weight: 600;
+    transition: color 0.3s ease-in-out;
+
+    @media (hover:hover) {
+      &:hover {
+        color: #ef813c;
+      }
+    }
+  }
+
+  &__product-sku {
+    font-size: 14px;
+    padding-bottom: 16px;
+  }
+
+  &__product-price {
+    font-size: 24px;
+    color: #ef813c;
+
+    &--compare {
+      margin-left: 24px;
+      text-decoration: line-through;
+      color: #000000;
+    }
+  }
+
   &__button {
     cursor: pointer;
     background: none;
     border: 1px solid #000000;
     padding: 16px 48px;
+    border-radius: 4px;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 
     @media (hover: hover) {
       &:hover {

@@ -23,16 +23,16 @@
                             <li class="popup__product-item"
                                 data-product-id="{{ product.selected_or_first_available_variant.id }}">
                                 <div class="popup__product-image">
-                                    <img src="{{ product.featured_media | img_url: '600' }}" alt="">
+                                    <img src="{{ product.featured_media | img_url: 'master' }}" alt="">
                                 </div>
                                 <div class="popup__product-details">
                                     <p>{{ product.vendor }}</p>
                                     <a href="{{ product.url }}">
-                                        <h4>{{ product.title | escape }}</h4>
+                                        <h4 class="popup__product-title">{{ product.title | escape }}</h4>
                                     </a>
-                                    <p>SKU: {{ product.selected_or_first_available_variant.sku }}</p>
-                                    <p>{{ product.price | money }}</p>
-                                    <p class="price-item--regular">{{ product.compare_at_price | money }}</p>
+                                    <p class="popup__product-sku">SKU: {{ product.selected_or_first_available_variant.sku }}</p>
+                                    <span class="popup__product-price">{{ product.price | money }}</span>
+                                    <span class="popup__product-price popup__product-price--compare">{{ product.compare_at_price | money }}</span>
                                 </div>
                             </li>
                         {%- endfor -%}
