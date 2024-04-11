@@ -2,7 +2,8 @@
     {{ 'popup.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'popup.js' | asset_url }}" defer="defer"></script>
 
-    <section id="js-popup" class="popup" data-popup-delay={{ section.settings.popup_delay | json }} data-show-once={{ section.settings.show_once | json }}>
+    <section id="popup" class="popup"
+             data-popup-delay={{ section.settings.popup_delay | json }} data-show-once={{ section.settings.show_once | json }}>
         <div class="popup__container">
             <div class="popup__content">
                 <button type="button" class="popup__close js-popup-close">
@@ -19,7 +20,8 @@
                     <ul class="popup__products">
                         {%- for block in section.blocks -%}
                             {% assign product = all_products[block.settings.product] %}
-                            <li class="popup__product-item">
+                            <li class="popup__product-item"
+                                data-product-id="{{ product.selected_or_first_available_variant.id }}">
                                 <div class="popup__product-image">
                                     <img src="{{ product.featured_media | img_url: '600' }}" alt="">
                                 </div>
@@ -28,14 +30,16 @@
                                     <a href="{{ product.url }}">
                                         <h4>{{ product.title | escape }}</h4>
                                     </a>
-                                    <p>{{ product.price | money }}</p>
-                                    <p>{{ product.compare_at_price | money }}</p>
                                     <p>SKU: {{ product.selected_or_first_available_variant.sku }}</p>
+                                    <p>{{ product.price | money }}</p>
+                                    <p class="price-item--regular">{{ product.compare_at_price | money }}</p>
                                 </div>
                             </li>
                         {%- endfor -%}
                     </ul>
-                    <button class="popup__button">Add to cart</button>
+                    <form id="popupForm">
+                        <button type="submit" class="popup__button">Add to cart</button>
+                    </form>
                 </div>
             </div>
         </div>
